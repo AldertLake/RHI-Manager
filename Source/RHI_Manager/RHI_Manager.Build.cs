@@ -1,4 +1,4 @@
-/ Some copyright should be here...
+// Copyright (c) 2025 Your Name or Company. All rights reserved.
 
 using UnrealBuildTool;
 
@@ -6,48 +6,50 @@ public class RHI_Manager : ModuleRules
 {
     public RHI_Manager(ReadOnlyTargetRules Target) : base(Target)
     {
-        PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
+        PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
+        // No additional include paths needed for this module
         PublicIncludePaths.AddRange(
-            new string[] {
-				// ... add public include paths required here ...
-			}
-            );
-
+            new string[]
+            {
+                // Add public include paths here if needed for external modules
+            }
+        );
 
         PrivateIncludePaths.AddRange(
-            new string[] {
-				// ... add other private include paths required here ...
-			}
-            );
-
+            new string[]
+            {
+                // Add private include paths here if needed for internal headers
+            }
+        );
 
         PublicDependencyModuleNames.AddRange(
             new string[]
             {
                 "Core",
-				// ... add other public dependencies that you statically link with here ...
-			}
-            );
-
+                "CoreUObject",
+                "Engine"
+            }
+        );
 
         PrivateDependencyModuleNames.AddRange(
             new string[]
             {
-                "CoreUObject",
-                "Engine",
-                "Slate",
-                "SlateCore",
-				// ... add private dependencies that you statically link with here ...	
-			}
-            );
-
+                // Required for UKismetSystemLibrary (PrintString)
+                "UMG"
+            }
+        );
 
         DynamicallyLoadedModuleNames.AddRange(
             new string[]
             {
-				// ... add any modules that your module loads dynamically here ...
-			}
-            );
+                // No dynamically loaded modules required
+            }
+        );
+
+        // Optimize build settings
+        bEnableExceptions = false;
+        bUseUnity = true; // Enable Unity builds for faster compilation
+        MinFilesUsingPrecompiledHeaderOverride = 1;
     }
 }
