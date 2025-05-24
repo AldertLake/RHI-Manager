@@ -8,48 +8,25 @@ public class RHI_Manager : ModuleRules
     {
         PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
-        // No additional include paths needed for this module
-        PublicIncludePaths.AddRange(
-            new string[]
-            {
-                // Add public include paths here if needed for external modules
-            }
-        );
-
-        PrivateIncludePaths.AddRange(
-            new string[]
-            {
-                // Add private include paths here if needed for internal headers
-            }
-        );
-
         PublicDependencyModuleNames.AddRange(
             new string[]
             {
                 "Core",
                 "CoreUObject",
-                "Engine"
+                "Engine" // Covers GConfig, UGameplayStatics
             }
         );
 
         PrivateDependencyModuleNames.AddRange(
             new string[]
             {
-                // Required for UKismetSystemLibrary (PrintString)
-                "UMG"
-            }
-        );
-
-        DynamicallyLoadedModuleNames.AddRange(
-            new string[]
-            {
-                // No dynamically loaded modules required
+                "UMG" // Covers UKismetSystemLibrary
             }
         );
 
         // Optimize build settings
         bEnableExceptions = false;
-        bUseUnity = true; // Enable Unity builds for faster compilation
+        bUseUnity = true;
         MinFilesUsingPrecompiledHeaderOverride = 1;
     }
 }
