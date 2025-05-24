@@ -1,4 +1,9 @@
-// Copyright (c) 2025 Your Name or Company. All rights reserved.
+/************************************************************************************
+ *                                                                                  *
+ * Copyright (c) 2025 AldertLake. All Rights Reserved.                              *
+ * GitHub: https://github.com/AldertLake/Windows-Native-Toolkit                     *
+ *                                                                                  *
+ ************************************************************************************/
 
 using UnrealBuildTool;
 
@@ -13,14 +18,14 @@ public class RHI_Manager : ModuleRules
             {
                 "Core",
                 "CoreUObject",
-                "Engine" // Covers GConfig, UGameplayStatics
+                "Engine"
             }
         );
 
         PrivateDependencyModuleNames.AddRange(
             new string[]
             {
-                "UMG" // Covers UKismetSystemLibrary
+
             }
         );
 

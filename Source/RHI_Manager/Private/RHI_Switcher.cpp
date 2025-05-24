@@ -1,9 +1,13 @@
-// Copyright (c) 2025 Your Name or Company. All rights reserved.
+/************************************************************************************
+ *                                                                                  *
+ * Copyright (c) 2025 AldertLake. All Rights Reserved.                              *
+ * GitHub: https://github.com/AldertLake/Windows-Native-Toolkit                     *
+ *                                                                                  *
+ ************************************************************************************/
 
 #include "RHI_Switcher.h"
-#include "Misc/ConfigCacheIni.h"        // For GConfig
-#include "Kismet/KismetSystemLibrary.h" // For PrintString
-#include "Kismet/GameplayStatics.h"     // For UGameplayStatics
+#include "Misc/ConfigCacheIni.h"        
+#include "Kismet/GameplayStatics.h"    
 
 // Initialize static variables
 ERHIType URHI_Switcher::CurrentRHIAtStartup = ERHIType::Default;
@@ -24,19 +28,6 @@ void URHI_Switcher::InitializeRHI()
             CurrentRHIAtStartup = ERHIType::Default;
         }
         DesiredRHI = CurrentRHIAtStartup; // Sync at startup
-    }
-    else
-    {
-        UKismetSystemLibrary::PrintString(
-            nullptr,
-            FString::Printf(TEXT("InitializeRHI: Unsupported platform '%s'. Only Windows is supported."), *PlatformName),
-            true,
-            true,
-            FLinearColor::Red,
-            5.0f
-        );
-        CurrentRHIAtStartup = ERHIType::Default;
-        DesiredRHI = ERHIType::Default;
     }
 }
 
@@ -67,66 +58,11 @@ void URHI_Switcher::SetDesiredRHI(ERHIType NewRHI)
             DesiredRHI = NewRHI; // Update desired RHI
         }
     }
-    else
-    {
-        UKismetSystemLibrary::PrintString(
-            nullptr,
-            FString::Printf(TEXT("SetDesiredRHI: Unsupported platform '%s'. Only Windows is supported."), *PlatformName),
-            true,
-            true,
-            FLinearColor::Red,
-            5.0f
-        );
-    }
 }
 
 bool URHI_Switcher::IsRelaunchRequired()
 {
     return CurrentRHIAtStartup != DesiredRHI;
-}
-
-void URHI_Switcher::NotifyRelaunchRequired()
-{
-    if (IsRelaunchRequired())
-    {
-        UKismetSystemLibrary::PrintString(
-            nullptr,
-            TEXT("Engine restart required to apply RHI changes. Please restart the editor or game."),
-            true,
-            true,
-            FLinearColor::Red,
-            5.0f
-        );
-    }
-}
-
-void URHI_Switcher::RestartGame()
-{
-    if (UWorld* World = GWorld)
-    {
-        FString CurrentLevelName = World->GetMapName();
-        CurrentLevelName.RemoveFromStart(TEXT("UEDPIE_0_")); // Handle PIE prefix
-        UGameplayStatics::OpenLevel(World, FName(*CurrentLevelName), true);
-        UKismetSystemLibrary::PrintString(
-            nullptr,
-            TEXT("Restarting game to reload level. Note: Full RHI change requires engine restart."),
-            true,
-            true,
-            FLinearColor::Yellow,
-            5.0f
-        );
-    }
-    else
-    {
-        UKismetSystemLibrary::PrintString(
-            nullptr,
-            TEXT("RestartGame: No valid World found."),
-            true,
-            true,
-            FLinearColor::Red,
-            5.0f
-        );
-    }
 }
 
 FString URHI_Switcher::RHITypeToString(ERHIType RHI)
