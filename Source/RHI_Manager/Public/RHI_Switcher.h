@@ -1,3 +1,5 @@
+// Copyright (c) 2025 Your Name or Company. All rights reserved.
+
 #pragma once
 
 #include "CoreMinimal.h"
@@ -8,10 +10,10 @@
 UENUM(BlueprintType)
 enum class ERHIType : uint8
 {
-    Default,
-    DirectX11,
-    DirectX12,
-    Vulkan
+    Default UMETA(DisplayName = "Default"),
+    DirectX11 UMETA(DisplayName = "DirectX 11"),
+    DirectX12 UMETA(DisplayName = "DirectX 12"),
+    Vulkan UMETA(DisplayName = "Vulkan")
 };
 
 /**
@@ -27,7 +29,7 @@ public:
     UFUNCTION(BlueprintCallable, Category = "RHI Switcher")
     static void InitializeRHI();
 
-    /** Gets the current RHI the engine is using, returned as an enum for dropdown use. */
+    /** Gets the current RHI from project settings, returned as an enum for dropdown use. */
     UFUNCTION(BlueprintCallable, Category = "RHI Switcher")
     static ERHIType GetCurrentRHI();
 
@@ -42,6 +44,10 @@ public:
     /** Shows a message if a relaunch is needed to apply RHI changes. */
     UFUNCTION(BlueprintCallable, Category = "RHI Switcher")
     static void NotifyRelaunchRequired();
+
+    /** Restarts the game to reload the current level. Note: Full RHI application requires an engine restart. */
+    UFUNCTION(BlueprintCallable, Category = "RHI Switcher")
+    static void RestartGame();
 
 private:
     static ERHIType CurrentRHIAtStartup; // RHI the engine started with
