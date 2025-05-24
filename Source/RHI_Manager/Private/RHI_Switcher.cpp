@@ -1,6 +1,7 @@
 #include "RHI_Switcher.h"
 #include "Misc/ConfigCacheIni.h"        // For GConfig
 #include "Kismet/KismetSystemLibrary.h" // For PrintString
+#include "Kismet/GameplayStatics.h"     // For UGameplayStatics
 
 // Initialize static variables
 ERHIType URHI_Switcher::CurrentRHIAtStartup = ERHIType::Default;
