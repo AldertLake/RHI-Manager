@@ -8,10 +8,10 @@
 UENUM(BlueprintType)
 enum class ERHIType : uint8
 {
+    Default,
     DirectX11,
     DirectX12,
-    Vulkan,
-    Default
+    Vulkan
 };
 
 /**
@@ -44,11 +44,10 @@ public:
     static void NotifyRelaunchRequired();
 
 private:
-    // Static variables to track RHI state
     static ERHIType CurrentRHIAtStartup; // RHI the engine started with
     static ERHIType DesiredRHI;          // RHI set for next launch
 
-    // Helper functions to convert between enum and config strings
+    // Helper functions for enum-to-string conversion
     static FString RHITypeToString(ERHIType RHI);
     static ERHIType StringToRHIType(const FString& RHIString);
 };
