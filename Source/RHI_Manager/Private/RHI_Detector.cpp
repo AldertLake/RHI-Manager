@@ -1,41 +1,57 @@
-// Copyright (c) 2025 Your Name or Company. All rights reserved.
+/************************************************************************************
+ *                                                                                  *
+ * Copyright (c) 2025 AldertLake. All Rights Reserved.                              *
+ * GitHub: https://github.com/AldertLake/Windows-Native-Toolkit                     *
+ *                                                                                  *
+ ************************************************************************************/
 
 #include "RHI_Detector.h"
-#include "HAL/PlatformMisc.h"     // For FPlatformMisc
-#include "RHI.h"                  // For GDynamicRHI
-#include "Kismet/GameplayStatics.h" // For GetPlatformName
+#include "HAL/PlatformMisc.h"     
+#include "RHI.h"                  
+#include "Kismet/GameplayStatics.h" 
 
 bool URHI_Detector::IsRHISupported(ERHIType RHI)
 {
     FString PlatformName = UGameplayStatics::GetPlatformName();
     if (PlatformName != TEXT("Windows"))
     {
-        return false; // Only Windows is supported
+        return false; 
     }
 
     switch (RHI)
     {
     case ERHIType::DirectX11:
     {
-        // DirectX 11 is supported if the feature level is at least SM5
+
         return GMaxRHIFeatureLevel >= ERHIFeatureLevel::SM5;
     }
     case ERHIType::DirectX12:
     {
-        // DirectX 12 requires Windows and modern GPU; assume supported on Windows
+
         return PLATFORM_WINDOWS && GDynamicRHI != nullptr;
     }
     case ERHIType::Vulkan:
     {
-        // Vulkan requires Windows and driver support; assume supported on Windows
+
         return PLATFORM_WINDOWS;
     }
     case ERHIType::Default:
     {
-        // Default RHI (typically DirectX 11) is assumed supported
+
         return true;
     }
     default:
         return false; // Unknown RHI
     }
+}
+
+
+FString URHI_Detector::GetGPUName()
+{
+    FString GPUBrand = FPlatformMisc::GetPrimaryGPUBrand();
+    if (!GPUBrand.IsEmpty())
+    {
+        return GPUBrand; 
+    }
+    return TEXT("Unknown GPU"); // Fallback if GPU brand is unavailable
 }

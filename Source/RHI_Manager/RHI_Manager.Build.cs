@@ -19,8 +19,7 @@ public class RHI_Manager : ModuleRules
                 "Core",
                 "CoreUObject",
                 "Engine",
-                                "Engine", // Covers GConfig, UGameplayStatics
-                "RHI"     // For GRHISupports* variables
+                "RHI"   
             }
         );
 
